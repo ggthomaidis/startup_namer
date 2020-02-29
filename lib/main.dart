@@ -1,3 +1,7 @@
+// Copyright 2018 The Flutter team. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
@@ -13,7 +17,7 @@ class MyApp extends StatelessWidget {
       home: RandomWords(),
     );
   }
-// #enddocregion build
+  // #enddocregion build
 }
 // #enddocregion MyApp
 
@@ -21,32 +25,21 @@ class MyApp extends StatelessWidget {
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final Set<WordPair> _saved = Set<WordPair>();
-  final _biggerFont = const TextStyle(fontSize: 25.0);
+  final _biggerFont = const TextStyle(fontSize: 18.0);
   // #enddocregion RWS-var
 
   // #docregion _buildSuggestions
   Widget _buildSuggestions() {
     return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.all(50.0),
+        padding: const EdgeInsets.all(16.0),
         itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd)
-            return Container(
-              width: 120.0,
-              color: Colors.deepOrange,
-              // height: 16.0,
-              // thickness: 2.0,
-              // indent: 5.0,
-              // endIndent: 50.0,
-            ); /*2*/
+          if (i.isOdd) return Divider(); /*2*/
+
           final index = i ~/ 2; /*3*/
           if (index >= _suggestions.length) {
             _suggestions.addAll(generateWordPairs().take(10)); /*4*/
           }
-          return Container(
-            width: 120.0,
-            color: Colors.blue,
-          ); //_buildRow(_suggestions[index]);
+          return _buildRow(_suggestions[index]);
         });
   }
   // #enddocregion _buildSuggestions
@@ -55,7 +48,6 @@ class RandomWordsState extends State<RandomWords> {
   Widget _buildRow(WordPair pair) {
     final bool alreadySaved = _saved.contains(pair);
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
@@ -87,12 +79,12 @@ class RandomWordsState extends State<RandomWords> {
       body: _buildSuggestions(),
     );
   }
-// #enddocregion RWS-build
-// #docregion RWS-var
+  // #enddocregion RWS-build
+  // #docregion RWS-var
 }
 // #enddocregion RWS-var
 
 class RandomWords extends StatefulWidget {
   @override
-  RandomWordsState createState() => new RandomWordsState();
+  RandomWordsState createState() => RandomWordsState();
 }
